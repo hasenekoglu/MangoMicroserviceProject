@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Mango.Services.CouponAPI.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/coupon")]
 [ApiController]
 public class CouponAPIController : ControllerBase
 {
@@ -28,7 +28,7 @@ public class CouponAPIController : ControllerBase
         try
         {
             IEnumerable<Coupon> objLıst = _db.Coupons.ToList();
-            _response.Result = _mapper.Map<IEnumerable<CouponDTO>>(objLıst);
+            _response.Result = _mapper.Map<IEnumerable<CouponDto>>(objLıst);
         }
         catch(Exception ex)
         {
@@ -46,7 +46,7 @@ public class CouponAPIController : ControllerBase
         try
         {
             Coupon obj = _db.Coupons.First(u=>u.CouponId==id);
-            _response.Result = _mapper.Map<CouponDTO>(obj);
+            _response.Result = _mapper.Map<CouponDto>(obj);
         }
         catch(Exception ex)
         {
@@ -65,7 +65,7 @@ public class CouponAPIController : ControllerBase
         try
         {
             Coupon obj = _db.Coupons.First(u=>u.CouponCode.ToLower()==code.ToLower());
-            _response.Result = _mapper.Map<CouponDTO>(obj);
+            _response.Result = _mapper.Map<CouponDto>(obj);
         }
         catch(Exception ex)
         {
@@ -79,7 +79,7 @@ public class CouponAPIController : ControllerBase
     
     
     [HttpPost]
-    public ResponseDto Post([FromBody] CouponDTO couponDTO)
+    public ResponseDto Post([FromBody] CouponDto couponDTO)
     {
         try
         {
@@ -87,7 +87,7 @@ public class CouponAPIController : ControllerBase
             _db.Coupons.Add(obj);
             _db.SaveChanges();
 
-            _response.Result = _mapper.Map<CouponDTO>(obj);
+            _response.Result = _mapper.Map<CouponDto>(obj);
         }
         catch(Exception ex)
         {
@@ -100,7 +100,7 @@ public class CouponAPIController : ControllerBase
     
     
     [HttpPut]
-    public ResponseDto Put([FromBody] CouponDTO couponDTO)
+    public ResponseDto Put([FromBody] CouponDto couponDTO)
     {
         try
         {
@@ -108,7 +108,7 @@ public class CouponAPIController : ControllerBase
             _db.Coupons.Update(obj);
             _db.SaveChanges();
 
-            _response.Result = _mapper.Map<CouponDTO>(obj);
+            _response.Result = _mapper.Map<CouponDto>(obj);
         }
         catch(Exception ex)
         {
@@ -122,6 +122,7 @@ public class CouponAPIController : ControllerBase
     
     
     [HttpDelete]
+    [Route("{id:int}")]
     public ResponseDto Delete(int id)
     {
         try
